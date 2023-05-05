@@ -25,23 +25,36 @@ mongoose.connect('mongodb://127.0.0.1:27014/geography', {
 const starbucks = require("./schema/Starbucks");
 
 app.post("/api/request", (req, res) => {
-    const lat = req.body.latitude;
-    console.log(lat);
-    const long = req.body.longitude;
-    console.log(long);
-    starbucks.find(
-    {
-        'State/Province': "IN",
-    }
-    )
-    .sort({ distance: 1 }) // Sort by distance in ascending order
-    .limit(10) // Return only the 10 closest locations
-    .then((results) => {
-    res.send(results);
-    console.log(results)
-    })
-    .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error fetching Starbucks locations");
-    });
-}); 
+    const userLat = req.body.latitude;
+    const userLng = req.body.longitude;
+    const R = 6371; // Earth's radius in km
+    starbucks
+      .find({ 'State/Province': 'IN' })
+      .then((results) => {
+        const locationsWithDistance = results.map((location) => {
+          const lat = location.Latitude;
+          const lng = location.Longitude;
+          const dLat = ((lat - userLat) * Math.PI) / 180;
+          const dLng = ((lng - userLng) * Math.PI) / 180;
+          const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos((userLat * Math.PI) / 180) *
+              Math.cos((lat * Math.PI) / 180) *
+              Math.sin(dLng / 2) *
+              Math.sin(dLng / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          const distance = R * c;
+          return { ...location.toObject(), distance }; // Add distance field to location object
+        });
+        const sortedLocations = locationsWithDistance.sort(
+          (a, b) => a.distance - b.distance
+        );
+        const closestLocations = sortedLocations.slice(0, 10);
+        res.send(closestLocations);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error fetching Starbucks locations');
+      });
+  });
+  

@@ -2,24 +2,24 @@
 <html>
 <head>
 	<title>Indiana Map</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-	<div style="display: flex; justify-content: center;">
-		<table>
-			<th>		
-				<div id="indiana-map">
-					<span id="coords"></span>
-				</div>
-			</th style="border: 2px solid black">
-			<th style="vertical-align: top; text-align: left;">    
-				<h2>Coordinates</h2>
-				<ul></ul>
-				<button id="clearButton">Clear All</button>
-			</th>
-		</table>
-	</div>
+	<div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Indiana Map</h1>
+                <div id="indiana-map"></div>
+            </div>
+            <div class="col-md-4">
+                <h2 class="m-1 p-1">Coordinates</h2>
+                <ul id="coordinates-list"></ul>
+                <button id="clearButton" class="btn btn-primary">Clear</button>
+            </div>
+        </div>
+    </div>
 	<script type="module" src="js/script.js"></script>
 </body>
 </html>

@@ -20,19 +20,41 @@ mapContainer.addEventListener('click', async function(event) {
     coordsText.setAttribute("style", "display: block")
     point.appendChild(coordsText);
 
-    const data = {latitude: lat, longitude: lng}
-    fetch("/api/request/", {
-        method: "POST",
-        headers:{"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    }) 
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error(error));
+    axios.post('/api/request', {
+        latitude: lat,
+        longitude: lng
+    })
+    .then(function (response) {
+        const closestLocations = response.data;
+        
+        // clear the list
+        const ul = document.querySelector('ul');
+        ul.innerHTML = '';
+    
+        // loop through the closestLocations and add them to the list
+        closestLocations.forEach(function(location) {
+            const li = document.createElement('li');
+            const text = document.createTextNode(`Lat: ${location.Latitude}, Long: ${location.Longitude}`);
+            const br = document.createElement('br');
+            li.appendChild(text);
+            li.appendChild(br); // add the br element
+            const streetText = document.createTextNode(`Street Address: ${location['Street Address']}`);
+            li.appendChild(streetText);
+            const cityText = document.createTextNode(`, City: ${location.City}`);
+            li.appendChild(cityText);
+            ul.appendChild(li);
+        });
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 });
 
 clearButton.addEventListener('click', function() {
     const points = document.querySelectorAll('.point');
     points.forEach(point => point.remove());
+
+    // clear the list
+    const ul = document.querySelector('ul');
+    ul.innerHTML = '';
 });
-    

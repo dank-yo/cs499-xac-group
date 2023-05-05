@@ -1,13 +1,20 @@
-#indiana-map {
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Map styles */
+  #indiana-map {
     position: relative;
     display: inline-block;
     background: url(../img/indiana.png) no-repeat;
     width: 713px;
-    height: 1036px;
-    margin: 0;
+    height: 100vh;
+    margin: 0 auto;
     padding: 0;
-}
-#indiana-map span {
+  }
+  
+  #indiana-map span {
     position: absolute;
     display: none;
     background-color: #333;
@@ -16,51 +23,77 @@
     border-radius: 5px;
     font-size: 14px;
     cursor: default;
-}
-#indiana-map .point {
+  }
+  
+  #indiana-map .point {
     position: absolute;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background-color: red;
     transform: translate(-50%, -50%);
-}
-
-#map-container {
+  }
+  
+  /* Coords display styles */
+  .coords-display {
     position: relative;
-    width: 100%;
-    max-width: 713px;
-    margin: 0 auto;
-}
-
-#coords-display {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    top: -20px;
+    left: 15px;
+    width: 150px;
     padding: 5px;
-    display: none;
-}
-
-#map-container:hover #coords-display {
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  
+  #map-container:hover #coords-display {
     display: block;
-}
-
-#coords-list {
+  }
+  
+  /* Coords list styles */
+  #coords-list {
     position: absolute;
     top: 0;
     right: 0;
     width: 200px;
-    max-height: 100%;
-    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+    overflow-y: scroll;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     padding: 5px;
     font-size: 14px;
     line-height: 1.5;
-}
-
-.coords {
+  }
+  
+  .coords {
     margin: 5px 0;
-}
+  }
+  
+  /* Point styles */
+  .point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* List styles */
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+  }
+  
+  /* List item styles */
+  li {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  /* Clear button styles */
+  #clearButton {
+    margin: 20px;
+  }
+  
